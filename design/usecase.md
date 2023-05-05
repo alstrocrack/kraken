@@ -1,6 +1,4 @@
-# Design
-
-## Usecase
+# Usecase
 
 ```mermaid
 flowchart LR
