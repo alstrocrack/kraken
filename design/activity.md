@@ -2,7 +2,7 @@
 
 ```mermaid
 ---
-title: Register
+title: Register user
 ---
 flowchart TD
 
@@ -26,7 +26,31 @@ flowchart TD
 
 ```mermaid
 ---
-title: Get
+title: Edit, Delete user
+---
+flowchart TD
+
+  %% Define classes for style
+  classDef user fill:#0072BC,stroke:none,color:black
+  classDef server fill:#FDB933,stroke:none,color:black
+
+  %% Diagram
+  A((START)) --> B(Asks for help):::user
+  B --> C(Returns way to send HTTP request to edit and delete user):::server
+  C --> D(Sends requests to edit and delete):::user
+  D --> E{Is it valid?}
+  E --Yes--> F(Returns the result):::server
+  F --> G(((END)))
+  E --No--> H(Makes user to resend a request again):::server
+  H --> I(Resend request):::user
+  I --> E
+```
+
+<hr/>
+
+```mermaid
+---
+title: Get memos
 ---
 flowchart TD
 
@@ -51,4 +75,29 @@ flowchart TD
   H --No--> K(Makes user to resend a request again):::server
   K --> L(Resend request):::user
   L --> H
+```
+
+<hr/>
+
+```mermaid
+---
+title: Edit, Delete memos
+---
+flowchart TD
+
+  %% Define classes for style
+  classDef user fill:#0072BC,stroke:none,color:black
+  classDef server fill:#FDB933,stroke:none,color:black
+  classDef point fill:black,stroke:none,color:black
+
+  %% Diagram
+  A((START)) --> B(Asks for help):::user
+  B --> C(Returns way to send HTTP request to get memos):::server
+  C --> D(Edit and Delete user's memo specified):::user
+  D --> E{Is it valid?}
+  E --Yes--> F(Returns the result):::server
+  F --> G(((END)))
+  E --No--> H(Makes user to resend a request again):::server
+  H --> I(Resend request):::user
+  I --> E
 ```
