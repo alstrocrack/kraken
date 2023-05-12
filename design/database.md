@@ -5,9 +5,11 @@
   users ||--|{ api_keys : ""
   users ||--|{ memos : ""
 
+  %% users: Register password in case API-KEY is reissued
   users {
     int id PK
     string email
+    string password
     string name
     datetime created_at
     datetime updated_at
