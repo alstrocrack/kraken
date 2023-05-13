@@ -14,12 +14,14 @@ A --- G[Get other users' public memos]
 A --- H[Register & Get issued an API-KEY]
 A --- I[Edit info & Get reissued an API-KEY]
 A --- J[show help]
+A --- K[Request to reissue API-KEY]
 
 B --- Z[Register a memo]
 B --- Y[Return a memo]
 B --- X[Register users & Issue an API-KEY]
 B --- W[Edit users' info & Reissue an API-KEY]
 B --- V[Show help]
+B --- U[Reissue an API-KEY]
 
 
 subgraph server's process
@@ -28,6 +30,7 @@ subgraph server's process
   X
   W
   V
+  U
 end
 
 subgraph user's own memos
@@ -45,5 +48,6 @@ subgraph user's process
   H
   I
   J
+  K
 end
 ```

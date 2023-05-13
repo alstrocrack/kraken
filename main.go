@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"kraken/db"
+	"log"
+)
 
 func main() {
-	fmt.Println("This is kraken.")
+	db, err := db.OpenDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(db)
 }
