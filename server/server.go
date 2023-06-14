@@ -1,7 +1,11 @@
 package server
 
-import "net/http"
+import (
+	"kraken/help"
+	"net/http"
+)
 
-func main() {
+func StartServer() {
+	http.HandleFunc("/help", help.Help)
 	http.ListenAndServe(":8080", nil)
 }
