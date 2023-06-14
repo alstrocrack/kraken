@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"kraken/db"
+	"kraken/server"
 	"log"
 )
 
@@ -12,4 +13,6 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(db)
+
+	server.StartServer()
 }
