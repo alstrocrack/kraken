@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"kraken/db"
-	"kraken/server"
+	"kraken/app/db"
+	"kraken/app/server"
 	"log"
 )
 
