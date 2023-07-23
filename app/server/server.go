@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"kraken/app/db"
 	"kraken/app/help"
 	"net/http"
@@ -14,9 +15,13 @@ type RegisterItem struct {
 	Name     string
 }
 
-func register(params []byte) {
-	items := &RegisterItem{}
-	err := json.Unmarshal([]byte(params), items)
+func register(w http.ResponseWriter, r *http.Request) {
+	item := &RegisterItem{}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = json.Unmarshal(body, &item)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -25,12 +30,13 @@ func register(params []byte) {
 		fmt.Println(err)
 	}
 	query := "INSERT INTO user_accounts (name, email, password_hash, created_at, updated_at) VALUES (?, ?, ?, Now(), Now());"
-	con.Exec(query, items.Name, items.Email, items.Password)
+	con.Exec(query, item.Name, item.Email, item.Password)
 }
 
 func StartServer() {
 	http.HandleFunc("/help", help.Help)
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/register", register)
 
-	http.HandleFunc("/register", register(params))
+	http.ListenAndServe("localhost:8080", nil)
+	// http.ListenAndServe(":8080", nil)
 }
