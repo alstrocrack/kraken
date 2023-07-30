@@ -30,7 +30,10 @@ func register(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	query := "INSERT INTO user_accounts (name, email, password_hash, created_at, updated_at) VALUES (?, ?, ?, Now(), Now());"
-	con.Exec(query, item.Name, item.Email, item.Password)
+	_, err = con.Exec(query, item.Name, item.Email, item.Password)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func StartServer() {
