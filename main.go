@@ -1,18 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"kraken/app/db"
 	"kraken/app/server"
 	"log"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	db, err := db.OpenDB()
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(db)
 
 	server.StartServer()
 }
