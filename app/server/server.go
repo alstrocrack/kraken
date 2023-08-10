@@ -17,6 +17,10 @@ type RegisterItem struct {
 	Name     string
 }
 
+type Post struct {
+	Content string
+}
+
 func register(w http.ResponseWriter, r *http.Request) {
 	item := &RegisterItem{}
 
@@ -60,9 +64,43 @@ func register(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+func post(w http.ResponseWriter, r *http.Request) {
+	post := &Post{}
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "ERROR: Cannot read request body", http.StatusBadRequest)
+		return
+	}
+
+	err = json.Unmarshal(body, &post)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "ERROR: Cannot read request body", http.StatusBadRequest)
+		return
+	}
+
+	con, err := db.OpenDB()
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "ERROR: Cannot connect DB", http.StatusInternalServerError)
+		return
+	}
+
+	query := "INSERT INTO posts (user_account_id, content, created_at, updated_at) VALUES (?, ?, Now(), Now());"
+	_, err = con.Exec(query, 1, post.Content)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "ERROR: Cannot insert new record", http.StatusInternalServerError)
+		return
+	}
+}
+
 func StartServer() {
 	http.HandleFunc("/help", help.Help)
 	http.HandleFunc("/register", register)
+	http.HandleFunc("/post", post)
 
 	http.ListenAndServe("localhost:8080", nil)
 }
