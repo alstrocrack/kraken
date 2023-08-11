@@ -17,5 +17,5 @@ However, the API will be released first, so please operate Kraken from there!
 Send a request to the endpoint as follows
 
 ```bash
-$ curl https://urushi.kraken.me/help
+$ curl https://kraken.urushi.me/help
 ```
