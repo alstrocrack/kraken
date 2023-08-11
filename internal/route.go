@@ -3,8 +3,8 @@ package server
 import (
 	"encoding/json"
 	"io"
-	"kraken/app/db"
-	"kraken/app/help"
+	"kraken/config/db"
+	"kraken/internal/help"
 	"log"
 	"net/http"
 
