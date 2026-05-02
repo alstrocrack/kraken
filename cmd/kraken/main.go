@@ -1,20 +1,20 @@
 package main
 
 import (
-	"kraken/config/logging"
-	server "kraken/internal"
+	"fmt"
 	"log"
-
-	"github.com/joho/godotenv"
+	"net/http"
 )
 
 func main() {
-	logging.LoggingInit("../../log.txt")
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Received request")
+		fmt.Fprintf(w, "Hello, World!")
+	})
 
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Fatalln(err)
+	log.Println("Starting server on :8080")
+	server := &http.Server{Addr: ":8080"}
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("Server failed: %v", err)
 	}
-
-	server.StartServer()
 }
